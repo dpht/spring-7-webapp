@@ -1,5 +1,6 @@
 package dannypht.springframework.spring_7_webapp.domain;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -26,7 +27,7 @@ public class Author {
 
   @ToString.Exclude
   @ManyToMany(mappedBy = "authors")
-  private Set<Book> books;
+  private Set<Book> books = new HashSet<>();
 
   @Override
   public boolean equals(Object o) {
