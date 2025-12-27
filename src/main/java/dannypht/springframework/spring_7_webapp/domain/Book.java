@@ -1,5 +1,6 @@
 package dannypht.springframework.spring_7_webapp.domain;
 
+import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
@@ -9,7 +10,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 public class Book {
 
@@ -19,6 +26,7 @@ public class Book {
   private String title;
   private String isbn;
 
+  @ToString.Exclude
   @ManyToMany
   @JoinTable(
     name = "author_book",
@@ -27,35 +35,17 @@ public class Book {
   )
   private Set<Author> authors;
 
-  public Set<Author> getAuthors() {
-    return authors;
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass())
+      return false;
+
+    Book book = (Book) o;
+    return Objects.equals(id, book.id);
   }
 
-  public void setAuthors(Set<Author> authors) {
-    this.authors = authors;
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public String getIsbn() {
-    return isbn;
-  }
-
-  public void setIsbn(String isbn) {
-    this.isbn = isbn;
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(id);
   }
 }
